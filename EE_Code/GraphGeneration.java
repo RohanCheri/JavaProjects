@@ -101,9 +101,6 @@ public class GraphGeneration {
                 operations++;
             }
 
-            System.out.println(operations);
-
-            works = true;
             if(works) {
                 out.println(size);
                 for(int i = 0; i < graph.length; i++) {
