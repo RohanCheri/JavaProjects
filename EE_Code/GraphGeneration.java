@@ -5,7 +5,12 @@ import java.util.*;
 
 public class GraphGeneration {
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-        PrintStream out = new PrintStream(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Generated_Graph1.txt"));
+        PrintStream genGraphName = new PrintStream(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Graph_Name.txt"));
+        String graphName = "Generated_Graph1.txt";
+        genGraphName.println(graphName);
+        genGraphName.close();
+
+        PrintStream out = new PrintStream(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\" + graphName));
         Scanner in = new Scanner(System.in);
         int size = in.nextInt();
         int numBlockages = in.nextInt();

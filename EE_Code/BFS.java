@@ -7,7 +7,11 @@ public class BFS {
     static int size;
 
     public static void main(String[] args) throws FileNotFoundException {
-        A_Star.FastReader in = new A_Star.FastReader("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Generated_Graph1.txt");
+        Scanner fGraphName = new Scanner(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Graph_Name.txt"));
+        String graphName = fGraphName.next();
+        fGraphName.close();
+
+        A_Star.FastReader in = new A_Star.FastReader("src\\JavaProjects\\EE_Code\\Generated_Graphs\\" + graphName);
         size = in.nextInt();
 
         int[][] graph = new int[size][size];

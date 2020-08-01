@@ -6,7 +6,11 @@ import java.util.*;
 public class A_Star {
     public static int size;
     public static void main(String[] args) throws FileNotFoundException {
-        FastReader in = new FastReader("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Generated_Graph1.txt");
+        Scanner fGraphName = new Scanner(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Graph_Name.txt"));
+        String graphName = fGraphName.next();
+        fGraphName.close();
+
+        FastReader in = new FastReader("src\\JavaProjects\\EE_Code\\Generated_Graphs\\" + graphName);
         size = in.nextInt();
 
         // input is a graph in the form of 1s and 0s
