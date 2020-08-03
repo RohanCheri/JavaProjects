@@ -16,6 +16,8 @@ public class CaptureScreen {
 
         BufferedImage image = robot.createScreenCapture(rectangle);
 
+        System.out.println(Color.BLACK.getRGB());
+
         // Creating PNG of image
         ImageIO.write(image, "png", new File("out.png"));
 
