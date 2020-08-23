@@ -1,11 +1,14 @@
 package JavaProjects.EE_Code;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
 public class A_Star {
     public static int size;
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Scanner fGraphName = new Scanner(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Graph_Name.txt"));
         String graphName = fGraphName.next();
         fGraphName.close();
@@ -36,7 +39,9 @@ public class A_Star {
         int operations = 0;
         Path finalPath = null;
 		PriorityQueue<Path> queue = new PriorityQueue<Path>();
-        queue.add(new Path(0, 0));
+		Path fPath = new Path(0, 0);
+		fPath.pathTo.add(new Integer[] {0, 0});
+        queue.add(fPath);
 
         while(!queue.isEmpty()) {
             operations++;
@@ -87,6 +92,52 @@ public class A_Star {
         }
 
         System.out.println("Operations: " + operations);
+
+        // Creating Image
+        int blackRGB = Color.BLACK.getRGB();
+        int greenRGB = Color.GREEN.getRGB();
+        BufferedImage image = new BufferedImage(1000, 1000, 1);
+
+        for(int i = 0; i < image.getWidth(); i++){
+            for(int j = 0; j < image.getHeight(); j++){
+                image.setRGB(i, j, Color.WHITE.getRGB());
+            }
+        }
+
+        int[] boundaries = new int[size + 1];
+
+        for(int i = 0; i < boundaries.length; i++){
+            boundaries[i] = (int)(i * (999.0 / size));
+
+            for(int j = 0; j < 1000; j++){
+                image.setRGB(j, boundaries[i], blackRGB);
+                image.setRGB(boundaries[i], j, blackRGB);
+            }
+        }
+
+        for(int i = 0; i < graph.length; i++){
+            for(int j = 0; j < graph[0].length; j++){
+                if(graph[i][j] == 1){
+                    for(int a = boundaries[i]; a < boundaries[i + 1]; a++){
+                        for(int b = boundaries[j]; b < boundaries[j + 1]; b++){
+                            image.setRGB(b, a, blackRGB);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(finalPath != null){
+            for(Integer[] pos : finalPath.pathTo){
+                for(int a = boundaries[pos[0]] + 1; a < boundaries[pos[0] + 1]; a++){
+                    for(int b = boundaries[pos[1]] + 1; b < boundaries[pos[1] + 1]; b++){
+                        image.setRGB(b, a, greenRGB);
+                    }
+                }
+            }
+        }
+
+        ImageIO.write(image, "png", new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\" + graphName.substring(0, graphName.length() - 4) + "_A_Star_Path" + ".png"));
     }
 
     static class Path implements Comparable<Path>{

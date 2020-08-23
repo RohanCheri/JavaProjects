@@ -9,7 +9,7 @@ import java.util.*;
 public class GraphGeneration {
     public static void main(String[] args) throws IOException, InterruptedException {
         PrintStream genGraphName = new PrintStream(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Graph_Name.txt"));
-        String graphName = "Generated_Graph1";
+        String graphName = "Generated_Graph_Example";
         genGraphName.println(graphName + ".txt");
         genGraphName.close();
 
