@@ -7,7 +7,8 @@ import java.io.*;
 import java.util.*;
 
 public class BFS {
-    static int size;
+    public static int size;
+    public static String outString = "";
 
     public static void main(String[] args) throws IOException {
         Scanner fGraphName = new Scanner(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\Graph_Name.txt"));
@@ -92,62 +93,66 @@ public class BFS {
             operations++;
         }
 
-        System.out.println("Elapsed Time: " + (System.currentTimeMillis() - cTime));
-
-        if(fPath == null){
-            System.out.println("Cannot Reach Endpoint");
+        if(args.length > 0){
+            outString = String.format("%-8d %-8d", operations, System.currentTimeMillis() - cTime);
         }
-        else{
-            System.out.println("Num Steps: " + fPath.size());
-        }
+        else {
+            System.out.println("Elapsed Time: " + (System.currentTimeMillis() - cTime));
 
-        System.out.println("Num Operations: " + operations);
-
-        // Creating Image
-        int blackRGB = Color.BLACK.getRGB();
-        int greenRGB = Color.GREEN.getRGB();
-        BufferedImage image = new BufferedImage(1000, 1000, 1);
-
-        for(int i = 0; i < image.getWidth(); i++){
-            for(int j = 0; j < image.getHeight(); j++){
-                image.setRGB(i, j, Color.WHITE.getRGB());
+            if (fPath == null) {
+                System.out.println("Cannot Reach Endpoint");
+            } else {
+                System.out.println("Num Steps: " + fPath.size());
             }
-        }
 
-        int[] boundaries = new int[size + 1];
+            System.out.println("Num Operations: " + operations);
 
-        for(int i = 0; i < boundaries.length; i++){
-            boundaries[i] = (int)(i * (999.0 / size));
+            // Creating Image
+            int blackRGB = Color.BLACK.getRGB();
+            int greenRGB = Color.GREEN.getRGB();
+            BufferedImage image = new BufferedImage(1000, 1000, 1);
 
-            for(int j = 0; j < 1000; j++){
-                image.setRGB(j, boundaries[i], blackRGB);
-                image.setRGB(boundaries[i], j, blackRGB);
+            for (int i = 0; i < image.getWidth(); i++) {
+                for (int j = 0; j < image.getHeight(); j++) {
+                    image.setRGB(i, j, Color.WHITE.getRGB());
+                }
             }
-        }
 
-        for(int i = 0; i < graph.length; i++){
-            for(int j = 0; j < graph[0].length; j++){
-                if(graph[i][j] == 1){
-                    for(int a = boundaries[i]; a < boundaries[i + 1]; a++){
-                        for(int b = boundaries[j]; b < boundaries[j + 1]; b++){
-                            image.setRGB(b, a, blackRGB);
+            int[] boundaries = new int[size + 1];
+
+            for (int i = 0; i < boundaries.length; i++) {
+                boundaries[i] = (int) (i * (999.0 / size));
+
+                for (int j = 0; j < 1000; j++) {
+                    image.setRGB(j, boundaries[i], blackRGB);
+                    image.setRGB(boundaries[i], j, blackRGB);
+                }
+            }
+
+            for (int i = 0; i < graph.length; i++) {
+                for (int j = 0; j < graph[0].length; j++) {
+                    if (graph[i][j] == 1) {
+                        for (int a = boundaries[i]; a < boundaries[i + 1]; a++) {
+                            for (int b = boundaries[j]; b < boundaries[j + 1]; b++) {
+                                image.setRGB(b, a, blackRGB);
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if(fPath != null){
-            for(Integer[] pos : fPath){
-                for(int a = boundaries[pos[0]] + 1; a < boundaries[pos[0] + 1]; a++){
-                    for(int b = boundaries[pos[1]] + 1; b < boundaries[pos[1] + 1]; b++){
-                        image.setRGB(b, a, greenRGB);
+            if (fPath != null) {
+                for (Integer[] pos : fPath) {
+                    for (int a = boundaries[pos[0]] + 1; a < boundaries[pos[0] + 1]; a++) {
+                        for (int b = boundaries[pos[1]] + 1; b < boundaries[pos[1] + 1]; b++) {
+                            image.setRGB(b, a, greenRGB);
+                        }
                     }
                 }
             }
-        }
 
-        ImageIO.write(image, "png", new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\" + graphName.substring(0, graphName.length() - 4) + "_BFS_Path" + ".png"));
+            ImageIO.write(image, "png", new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\" + graphName.substring(0, graphName.length() - 4) + "_BFS_Path" + ".png"));
+        }
     }
 
     static class FastReader

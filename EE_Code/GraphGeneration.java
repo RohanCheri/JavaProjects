@@ -15,8 +15,17 @@ public class GraphGeneration {
 
         PrintStream out = new PrintStream(new File("src\\JavaProjects\\EE_Code\\Generated_Graphs\\" + graphName + ".txt"));
         Scanner in = new Scanner(System.in);
-        int size = in.nextInt();
-        int numBlockages = in.nextInt();
+
+        int size, numBlockages;
+        if(args.length > 0){
+            size = Integer.valueOf(args[0]);
+            numBlockages = Integer.valueOf(args[1]);
+        }
+        else{
+            size = in.nextInt();
+            numBlockages = in.nextInt();
+        }
+
 
         int blackRGB = Color.BLACK.getRGB();
         BufferedImage image = new BufferedImage(1000, 1000, 1);
