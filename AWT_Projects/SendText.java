@@ -29,7 +29,7 @@ public class SendText {
     public static int waitTime = 200;
 
     // Text to send
-    public static String sendString = "I like ur sketcheres you like me my gucci shoooes. peepeepoopooopog";
+    public static String sendString = "I'm not a perv.";
 
     // How many times the text repeats (Use 0 for infinite)
     public static int repeats = 5;
